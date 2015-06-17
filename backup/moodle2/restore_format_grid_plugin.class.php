@@ -150,8 +150,9 @@ class restore_format_grid_plugin extends restore_format_plugin {
         } else {
             global $PAGE;
             $old = $DB->get_record('format_grid_icon', array('courseid' => $data->courseid, 'sectionid' => $data->sectionid));
-            if ((is_null($old->image)) && (strcmp($PAGE->pagetype, 'backup-restore') == 0)) {
-                // Update the record to use this icon as we are restoring not importing and no icon exists already.
+            if (is_null($old->image))) {
+                // Update the record to use this icon if no icon already exists, regardless of whether this
+                // is a restore or import.
                 $data->id = $old->id;
                 if (!$DB->update_record('format_grid_icon', $data)) {
                     throw new moodle_exception('invalidrecordid', 'format_grid', '',
